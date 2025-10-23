@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: ./
+    container_name: backend_movie_manager
+    ports:
+      - 3005:3000 # host:container
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    networks:
+      - movie_manager_network
+
+  db:
+    image: postgres:17-alpine3.21
+    container_name: pg_movie_manager
+    restart: always
+    ports:
+      - 5439:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: movie_app
+    volumes:
+      - db_dev:/var/lib/postgresql/data
+    networks:
+      - movie_manager_network
+
+networks:
+  movie_manager_network:
+    driver: bridge
+
+volumes:
+  db_dev:
+    driver: local
