@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -19,5 +19,12 @@ export class MoviesService {
   async findAll(): Promise<MovieEntity[]> {
     const movies = await this.prisma.movie.findMany();
     return movies;
+  }
+
+  async findOne(id: number): Promise<MovieEntity> {
+    const movie = await this.prisma.movie.findUnique({ where: { id } });
+    if (!movie) throw new BadRequestException();
+
+    return movie;
   }
 }
