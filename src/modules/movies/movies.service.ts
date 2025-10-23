@@ -15,4 +15,9 @@ export class MoviesService {
     });
     return movie;
   }
+
+  async findAll(): Promise<MovieEntity[]> {
+    const movies = await this.prisma.movie.findMany();
+    return movies;
+  }
 }

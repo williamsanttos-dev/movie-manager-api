@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { MovieEntity } from './entities/movie.entity';
@@ -10,5 +10,10 @@ export class MoviesController {
   @Post()
   async create(@Body() createMovieDto: CreateMovieDto): Promise<MovieEntity> {
     return await this.moviesService.create(createMovieDto);
+  }
+
+  @Get()
+  async findAll(): Promise<MovieEntity[]> {
+    return await this.moviesService.findAll();
   }
 }
