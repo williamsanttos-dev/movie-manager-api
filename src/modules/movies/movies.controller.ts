@@ -1,4 +1,14 @@
-import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  HttpCode,
+  Delete,
+  HttpStatus,
+} from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { MovieEntity } from './entities/movie.entity';
@@ -29,5 +39,11 @@ export class MoviesController {
     @Body() updateMovieDto: UpdateMovieDto,
   ): Promise<MovieEntity> {
     return await this.moviesService.update(+id, updateMovieDto);
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<void> {
+    return await this.moviesService.remove(+id);
   }
 }

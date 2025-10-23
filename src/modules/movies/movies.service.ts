@@ -53,4 +53,19 @@ export class MoviesService {
       throw err;
     }
   }
+
+  async remove(id: number): Promise<void> {
+    try {
+      await this.prisma.movie.delete({
+        where: { id },
+      });
+    } catch (err) {
+      if (
+        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err.code === 'P2025'
+      )
+        throw new NotFoundException(`Movie with id ${id} not found`);
+      throw err;
+    }
+  }
 }
