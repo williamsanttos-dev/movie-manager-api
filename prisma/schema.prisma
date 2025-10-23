@@ -5,7 +5,22 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
+
+model Movie {
+  id Int @id @unique @default(autoincrement())
+  url String 
+  title String @db.VarChar(100)
+  genre String 
+  ageGroup Int @map("age_group")
+  duration String
+  rating Float
+  year Int
+  description String  
+
+  @@map("movie")
+}
+ 
 
 
