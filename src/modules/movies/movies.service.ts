@@ -23,7 +23,11 @@ export class MoviesService {
   }
 
   async findAll(): Promise<MovieEntity[]> {
-    const movies = await this.prisma.movie.findMany();
+    const movies = await this.prisma.movie.findMany({
+      orderBy: {
+        id: 'desc',
+      },
+    });
     return movies;
   }
 
