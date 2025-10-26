@@ -18,11 +18,6 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
-  @Get('test')
-  teste(): string {
-    return 'OK';
-  }
-
   @Post()
   async create(@Body() createMovieDto: CreateMovieDto): Promise<MovieEntity> {
     return await this.moviesService.create(createMovieDto);
